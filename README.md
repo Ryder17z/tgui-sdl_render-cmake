@@ -1,6 +1,5 @@
-### tgui-sdl_render-cmake
-TGUI running on SDL_RENDER (cmake project)
-----
+## Template: tgui-sdl_render-cmake
+### TGUI running on SDL_RENDER
 <p>Fetches and builds TGUI and SDL2, linking them statically.</p>
 <br>
 <p>Intended for Linux and Windows platforms.</p>
