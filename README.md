@@ -1,12 +1,16 @@
 ### tgui-sdl_render-cmake
 TGUI running on SDL_RENDER (cmake project)
 ----
-Fetches and builds TGUI and SDL2, linking them statically.
-
-Intended for Linux and Windows platforms.
-*Untested but would probably work on MacOS as well
-
-* Note: Consider this as a WIP template.
+<p>Fetches and builds TGUI and SDL2, linking them statically.</p>
+<br>
+<p>Intended for Linux and Windows platforms.</p>
+<p>* Untested but would probably work on MacOS as well</p>
+<hr>
+<p>Depending on the platform, cmake may build the application directly. This is the case for Linux.</p>
+<p>For the Windows platform, a Visual Studio project will be set up with filters reflecting the actual folder structure. This can then be compiled.</p>
+<p>* If you want to use clang, mingw or another compiler/ide solution, this template may not be suitable for you.</p>
+<br><p>* Note: Consider this as a WIP template.</p>
+<hr>
 
 ### Project structure
 | Folder/File Path | Description           |
