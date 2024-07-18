@@ -33,7 +33,7 @@ At the bottom of ```/src/CMakeLists.txt``` is the commands to "install" (copy) f
 ### Optional dependencies:
 ```/src/update_sources.py``` can be used to update ```/src/CMakeLists.txt``` *target_sources* section.
 
-Only necessary when files have been added or removed inside ```/src/``` folder.
+Only necessary when files have been added, renamed or removed inside ```/src/``` folder.
 | Target filetypes | .c | .cpp | .h | .hpp |
 |------------------|----|------|----|------|
 
