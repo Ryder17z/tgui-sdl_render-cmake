@@ -1,4 +1,3 @@
-## Template: tgui-sdl_render-cmake
 ### TGUI running on SDL_RENDER
 <p>Template project that fetches and builds TGUI with SDL2, linking them statically.</p>
 <br>
