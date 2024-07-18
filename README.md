@@ -1,6 +1,6 @@
 ## Template: tgui-sdl_render-cmake
 ### TGUI running on SDL_RENDER
-<p>Fetches and builds TGUI and SDL2, linking them statically.</p>
+<p>Template project that fetches and builds TGUI with SDL2, linking them statically.</p>
 <br>
 <p>Intended for Linux and Windows platforms.</p>
 <p>* Untested but would probably work on MacOS as well</p>
