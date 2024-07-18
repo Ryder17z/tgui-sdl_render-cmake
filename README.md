@@ -19,6 +19,7 @@ Intended for Linux and Windows platforms.
 | /build/*         | used when building    |
 | /bin/*           | executable directory  |
 | /run_cmake.bat     | calls cmake on Windows |
+| /run_cmake.sh     | calls cmake on Linux |
 
 ### Configuration
 ```/CMakeLists.txt``` sets the name of the executable "tgui_Test" and can be changed as desired. 
