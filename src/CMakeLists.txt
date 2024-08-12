@@ -1,14 +1,14 @@
+set(BUILD_SHARED_LIBS FALSE) # force use of static libs
+
 # GLOB can cause issues in the CMake cache and IDEs
 # See https://stackoverflow.com/questions/1027247/is-it-better-to-specify-source-files-with-glob-or-each-file-individually-in-cmak/1060061#1060061
-#file(GLOB_RECURSE project_src
-#        "*.h"
-#        "*.hpp"
-#        "*.cpp"
-#        "*.c"
-#)
-# replaced by python cog
-
-# Set up filters in Visual Studio (not vscode)
+file(GLOB_RECURSE project_src
+        "*.h"
+        "*.hpp"
+        "*.cpp"
+        "*.c"
+)
+# Only used to set up "filters" in (not vscode)
 foreach(_source IN ITEMS ${project_src})
     get_filename_component(_source_path "${_source}" PATH)
     file(RELATIVE_PATH _source_path_rel ${CMAKE_CURRENT_LIST_DIR} "${_source_path}")
@@ -16,6 +16,7 @@ foreach(_source IN ITEMS ${project_src})
     source_group("${_group_path}" FILES "${_source}")
 endforeach()
 
+# .exe
 add_executable (${PROJECT_NAME})
 
 # Use target_sources() to add source dependencies
@@ -47,15 +48,20 @@ if(NO_EXTERNAL_LIBS)
     target_link_libraries(${PROJECT_NAME}
         PRIVATE
         SDL2::SDL2
+        SDL2_ttf::SDL2_ttf
         TGUI::TGUI
     )
 else()
+    message(STATUS "Fetching Dependencies: SDL2, SDL2_TTF, TGUI")
+
     # This downloads SDL2 directly to the binary dir
     FetchContent_Declare(SDL2-static
         GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
         GIT_TAG 132b88749c284e4d51d93f1e08f5bb0ff9d705dc
         # Make sure we're building SDL2 statically!
-        CMAKE_ARGS -DSDL_STATIC=ON
+        CMAKE_ARGS
+            -DSDL_STATIC=ON
+            -DSDL_SHARED=OFF # Force only static building/linking
     )
     # Expose SDL to the project like a find_package()
     # Only possible because SDL uses CMake!
@@ -65,9 +71,31 @@ else()
         SDL2-static
     )
 
+    # Set the options required for a static build before fetching content
+    set(FETCHCONTENT_QUIET FALSE)
+    set(SDL2_TTF_STATIC ON CACHE BOOL "" FORCE)
+    set(SDL2TTF_VENDORED ON CACHE BOOL "" FORCE)
+    # This downloads SDL_TTF directly to the binary dir
+    FetchContent_Declare(SDL2_TTF
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf.git
+        GIT_TAG 4a318f8dfaa1bb6f10e0c5e54052e25d3c7f3440 # 2.22.0
+        # Make sure we're building SDL2_TTF statically!
+        CMAKE_ARGS
+            -DSDL2_TTF_STATIC=ON
+            -DSDL_SHARED=OFF # Force only static building/linking
+            -DSDL2TTF_VENDORED=ON
+            #-DSDL2_TTF_TARGET_NAME=SDL2_TTF-static # doesn't do anything?
+    )
+    # Fetch the content and make it available
+    FetchContent_MakeAvailable(SDL2_TTF)
+    target_link_libraries(${PROJECT_NAME}
+        PRIVATE
+        SDL2_ttf
+    )
+
+    # set up TGUI parameters before downloading
     set(TGUI_STATIC_LIBRARIES TRUE)
     set(TGUI_CXX_STANDARD 17)
-    set(BUILD_SHARED_LIBS FALSE)
     set(TGUI_BACKEND SDL_RENDERER)
     # This downloads TGUI directly to the binary dir
     FetchContent_Declare(TGUI
@@ -84,6 +112,10 @@ else()
         TGUI::TGUI
     )
 endif()
+
+
+# Set the correct debugger working directory in case Visual Studio is to be used
+set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
 
 # Without the trailing / after assets, it would copy the directory instead of its contents
