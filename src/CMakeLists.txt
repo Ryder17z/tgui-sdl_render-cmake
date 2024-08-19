@@ -47,12 +47,22 @@ target_sources(${PROJECT_NAME}
 if(NO_EXTERNAL_LIBS)
     target_link_libraries(${PROJECT_NAME}
         PRIVATE
+        Freetype::Freetype
         SDL2::SDL2
         SDL2_ttf::SDL2_ttf
         TGUI::TGUI
     )
 else()
-    message(STATUS "Fetching Dependencies: SDL2, SDL2_TTF, TGUI")
+    message(STATUS "Fetching Dependencies: SDL2, SDL2_TTF, Freetype, TGUI")
+
+    # This downloads Freetype directly to the binary dir
+    FetchContent_Declare(Freetype
+        GIT_REPOSITORY https://gitlab.freedesktop.org/freetype/freetype.git
+    )
+    target_link_libraries(${PROJECT_NAME}
+        PRIVATE
+        Freetype::Freetype
+    )
 
     # This downloads SDL2 directly to the binary dir
     FetchContent_Declare(SDL2-static
