@@ -31,7 +31,7 @@ See Optional dependencies if you do not want to update ```/src/CMakeLists.txt```
 At the bottom of ```/src/CMakeLists.txt``` is the commands to "install" (copy) files into the the ```/bin/``` folder so that the application will run, like the theme file "black.txt".
 
 ### Optional dependencies:
-```/src/update_sources.py``` can be used to update ```/src/CMakeLists.txt``` *target_sources* section.
+```/src/update_sources.sh``` or ```/src/update_sources.bat``` can be used to update ```/src/CMakeLists.txt``` *target_sources* section.
 
 Only necessary when files have been added, renamed or removed inside ```/src/``` folder.
 | Target filetypes | .c | .cpp | .h | .hpp |
