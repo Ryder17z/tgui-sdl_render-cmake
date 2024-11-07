@@ -35,6 +35,7 @@ target_sources(${PROJECT_NAME}
 #                file_paths.append(file_path)
 #    file_paths.sort(key=lambda x: (x != 'main.cpp', x))
 #    for file_path in file_paths:
+#               file_path = file_path.replace("\\","/")
 #               cog.outl("\"%s\"" % file_path)
 # ]]]
 "main.cpp"
